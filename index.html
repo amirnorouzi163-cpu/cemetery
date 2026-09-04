@@ -151,27 +151,26 @@
       }
     ];
 
-    // تعریف محدوده دقیق کادر امامزاده (چپ، راست، بالا، پایین)
+    // کادر جغرافیایی محوطه امامزاده
     const emamzadehBounds = [
-      [33.7169, 50.1648], // گوشه جنوب غربی
-      [33.7180, 50.1660]  // گوشه شمال شرقی
+      [33.7165, 50.1645],
+      [33.7183, 50.1663]
     ];
 
-    // تنظیم نقشه دقیقاً روی محوطه با زوم بالا و قفل کردن محدوده
+    // قفل کردن زوم و کادر نقشه
     const map = L.map('map', {
       center: [33.717453, 50.165419],
       zoom: 20,
-      minZoom: 18,
-      maxZoom: 22,
+      minZoom: 19, // جلوگیری از زوم اوت شدن
+      maxZoom: 21,
       maxBounds: emamzadehBounds,
-      maxBoundsViscosity: 1.0 // جلوگیری از بیرون رفتن از کادر
+      maxBoundsViscosity: 1.0
     });
 
-    // لایه ماهواره‌ای گوگل
-    L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-      maxZoom: 22,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      attribution: 'Google Satellite'
+    // لایه باکیفیت و شفاف گوگل (Google Hybrid HD)
+    L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      maxZoom: 21,
+      attribution: 'Google Satellite HD'
     }).addTo(map);
 
     let markers = {};
@@ -205,7 +204,7 @@
 
     function goToGrave(index) {
       const grave = graves[index];
-      map.setView(grave.coords, 21);
+      map.setView(grave.coords, 20);
       markers[index].openPopup();
     }
 
