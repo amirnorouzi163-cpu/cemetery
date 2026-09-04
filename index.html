@@ -151,12 +151,25 @@
       }
     ];
 
-    // تنظیم مرکز نقشه روی آرامستان یوجان
-    const map = L.map('map').setView([33.717453, 50.165419], 19);
+    // تعریف محدوده دقیق کادر امامزاده (چپ، راست، بالا، پایین)
+    const emamzadehBounds = [
+      [33.7169, 50.1648], // گوشه جنوب غربی
+      [33.7180, 50.1660]  // گوشه شمال شرقی
+    ];
 
-    // استفاده از نقشه ماهواره‌ای Google Maps (بدون مشکل No Data)
+    // تنظیم نقشه دقیقاً روی محوطه با زوم بالا و قفل کردن محدوده
+    const map = L.map('map', {
+      center: [33.717453, 50.165419],
+      zoom: 20,
+      minZoom: 18,
+      maxZoom: 22,
+      maxBounds: emamzadehBounds,
+      maxBoundsViscosity: 1.0 // جلوگیری از بیرون رفتن از کادر
+    });
+
+    // لایه ماهواره‌ای گوگل
     L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-      maxZoom: 21,
+      maxZoom: 22,
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       attribution: 'Google Satellite'
     }).addTo(map);
@@ -192,7 +205,7 @@
 
     function goToGrave(index) {
       const grave = graves[index];
-      map.setView(grave.coords, 20);
+      map.setView(grave.coords, 21);
       markers[index].openPopup();
     }
 
