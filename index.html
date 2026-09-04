@@ -18,19 +18,6 @@
       padding: 20px 15px;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .header-logo {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-      border: 2px solid #ffffff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
     header h1 {
@@ -59,6 +46,7 @@
       margin: 0 auto 20px auto;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      background-color: #e5e3df;
     }
 
     #modal-360 {
@@ -121,7 +109,6 @@
 <body>
 
   <header>
-    <img src="https://via.placeholder.com/80?text=Logo" alt="لوگو" class="header-logo" id="siteLogo">
     <h1 id="siteTitle">یادنامه و نقشه هوشمند آرامستان روستای یوجان</h1>
   </header>
 
@@ -151,26 +138,25 @@
       }
     ];
 
-    // کادر جغرافیایی محوطه امامزاده
     const emamzadehBounds = [
-      [33.7165, 50.1645],
-      [33.7183, 50.1663]
+      [33.7155, 50.1635],
+      [33.7195, 50.1675]
     ];
 
-    // قفل کردن زوم و کادر نقشه
     const map = L.map('map', {
       center: [33.717453, 50.165419],
-      zoom: 20,
-      minZoom: 19, // جلوگیری از زوم اوت شدن
-      maxZoom: 21,
+      zoom: 18,
+      minZoom: 17,
+      maxZoom: 19,
       maxBounds: emamzadehBounds,
       maxBoundsViscosity: 1.0
     });
 
-    // لایه باکیفیت و شفاف گوگل (Google Hybrid HD)
-    L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-      maxZoom: 21,
-      attribution: 'Google Satellite HD'
+    // استفاده از لایه ماهواره‌ای Esri HD
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxNativeZoom: 18,
+      maxZoom: 19,
+      attribution: 'Esri World Imagery'
     }).addTo(map);
 
     let markers = {};
@@ -204,7 +190,7 @@
 
     function goToGrave(index) {
       const grave = graves[index];
-      map.setView(grave.coords, 20);
+      map.setView(grave.coords, 18);
       markers[index].openPopup();
     }
 
