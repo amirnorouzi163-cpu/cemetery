@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>یادنامه و نقشه آرامستان روستا</title>
+  <title>یادنامه و نقشه آرامستان یوجان</title>
   
   <!-- CSS برای نقشه Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -38,14 +38,13 @@
     }
 
     #map {
-      height: 500px;
+      height: 520px;
       width: 95%;
       margin: 0 auto 20px auto;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    /* استایل پنجره ۳۶۰ درجه */
     #modal-360 {
       display: none;
       position: fixed;
@@ -106,7 +105,7 @@
 <body>
 
   <header>
-    <h2>آرامستان روستای ما</h2>
+    <h2>یادنامه و نقشه آرامستان یوجان</h2>
   </header>
 
   <div class="search-container">
@@ -115,39 +114,29 @@
 
   <div id="map"></div>
 
-  <!-- مدال نمایش عکس ۳۶۰ درجه -->
   <div id="modal-360">
     <span class="close-btn" onclick="close360()">× بستن</span>
     <div id="panorama"></div>
   </div>
 
-  <!-- کتابخانه‌های جاوااسکریپت -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
   <script>
-    // ۱. لیست قبرها (داده‌های نمونه)
+    // لیست قبرها (نمونه اولیه - بعداً با اطلاعات واقعی شما جایگزین می‌شود)
     const graves = [
       {
         id: 1,
-        name: "مرحوم حاج علی محمدی",
-        dates: "۱۳۱۰ - ۱۴۰۰",
-        coords: [35.6892, 51.3890],
-        image: "https://via.placeholder.com/200x150?text=Grave+1",
-        panoUrl: "https://pannellum.org/images/alma.jpg"
-      },
-      {
-        id: 2,
-        name: "مرحومه فاطمه حسینی",
-        dates: "۱۳۲۰ - ۱۳۹۸",
-        coords: [35.6893, 51.3892],
-        image: "https://via.placeholder.com/200x150?text=Grave+2",
+        name: "مرحوم غلامی (نمونه)",
+        dates: "۱۳۱۵ - ۱۴۰۱",
+        coords: [33.717453, 50.165419],
+        image: "https://via.placeholder.com/200x150?text=Grave+Sample",
         panoUrl: "https://pannellum.org/images/alma.jpg"
       }
     ];
 
-    // ۲. راه اندازی نقشه ماهواره‌ای
-    const map = L.map('map').setView([35.6892, 51.3890], 19);
+    // مرکز نقشه دقیقاً روی آرامستان یوجان
+    const map = L.map('map').setView([33.717453, 50.165419], 18);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 19,
@@ -156,7 +145,6 @@
 
     let markers = {};
 
-    // ۳. افزودن پین‌ها روی نقشه
     function loadGraves() {
       graves.forEach((grave, index) => {
         const marker = L.marker(grave.coords).addTo(map);
@@ -184,14 +172,12 @@
 
     loadGraves();
 
-    // ۴. جابه‌جایی با دکمه قبلی/بعدی
     function goToGrave(index) {
       const grave = graves[index];
       map.setView(grave.coords, 19);
       markers[index].openPopup();
     }
 
-    // ۵. قابلیت جستجو
     function searchGrave() {
       const query = document.getElementById('searchInput').value.toLowerCase();
       const foundIndex = graves.findIndex(g => g.name.toLowerCase().includes(query));
@@ -201,7 +187,6 @@
       }
     }
 
-    // ۶. مدیریت نمایش ۳۶۰ درجه
     let viewer = null;
     function open360(panoUrl) {
       document.getElementById('modal-360').style.display = 'block';
